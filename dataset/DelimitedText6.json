@@ -1,0 +1,72 @@
+{
+	"name": "DelimitedText6",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedserviceforaamirstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "destination"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "10",
+				"type": "String"
+			},
+			{
+				"name": "Aamir",
+				"type": "String"
+			},
+			{
+				"name": "Shahzad",
+				"type": "String"
+			},
+			{
+				"name": "TV",
+				"type": "String"
+			},
+			{
+				"name": "14",
+				"type": "String"
+			},
+			{
+				"name": "700",
+				"type": "String"
+			},
+			{
+				"name": "2015-07-15",
+				"type": "String"
+			},
+			{
+				"name": "Charlotte",
+				"type": "String"
+			},
+			{
+				"name": "NC",
+				"type": "String"
+			},
+			{
+				"name": "USA",
+				"type": "String"
+			},
+			{
+				"name": "North America",
+				"type": "String"
+			},
+			{
+				"name": "2021-04-21",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,19 @@
+{
+	"name": "Binary8",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedserviceforaamirstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Asia.csv",
+				"container": "destination"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

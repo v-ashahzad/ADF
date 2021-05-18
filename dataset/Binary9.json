@@ -1,0 +1,19 @@
+{
+	"name": "Binary9",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedserviceforaamirstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Mapping.txt",
+				"container": "destination"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

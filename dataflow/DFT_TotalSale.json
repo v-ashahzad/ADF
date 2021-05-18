@@ -1,0 +1,32 @@
+{
+	"name": "DFT_TotalSale",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable3",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText13",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Select1"
+				}
+			],
+			"script": "source(output(\n\t\tid as integer,\n\t\tSalePersonFName as string,\n\t\tSalePersonLName as string,\n\t\tProductName as string,\n\t\tItemsSold as integer,\n\t\tSoldPrice as double,\n\t\tSoldDate as date,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tRegion as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'Select * from dbo.TotalSale',\n\tformat: 'query') ~> source1\nsource1 select(mapColumn(\n\t\tid,\n\t\tSalePersonFName,\n\t\tSoldPrice,\n\t\tCity,\n\t\tState,\n\t\tCountry,\n\t\tRegion\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(input(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Test_Totalsale.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}

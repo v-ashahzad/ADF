@@ -1,0 +1,17 @@
+{
+	"name": "TotalSaleTableOnPrem",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OnpremSQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "TotalSale"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,53 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Excel_TotalSale",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "NA_Regon",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "Europe",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText6",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText7",
+						"type": "DatasetReference"
+					},
+					"name": "sink4"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ConditionalSplit1"
+				}
+			],
+			"script": "source(output(\n\t\tid as string,\n\t\tSalePersonFName as string,\n\t\tSalePersonLName as string,\n\t\tProductName as string,\n\t\tItemsSold as string,\n\t\tSoldPrice as string,\n\t\tSoldDate as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tCountry as string,\n\t\tRegion as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 split(Region=='North America',\n\tRegion=='Europe',\n\tdisjoint: false) ~> ConditionalSplit1@(NorthAmerica, Europe, Asia)\nConditionalSplit1@NorthAmerica sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['NorthAmerica.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nConditionalSplit1@Europe sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Europe.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2\nConditionalSplit1@Asia sink(input(\n\t\t{10} as string,\n\t\tAamir as string,\n\t\tShahzad as string,\n\t\tTV as string,\n\t\t{14} as string,\n\t\t{700} as string,\n\t\t{2015-07-15} as string,\n\t\tCharlotte as string,\n\t\tNC as string,\n\t\tUSA as string,\n\t\t{North America} as string,\n\t\t{2021-04-21} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Asia.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink3\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['TotalSaleFullData.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tquoteAll: true) ~> sink4"
+		}
+	}
+}
